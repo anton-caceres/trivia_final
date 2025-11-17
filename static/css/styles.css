@@ -223,3 +223,25 @@ button:disabled {
   border-color: #f97316;
   color: #fed7aa;
 }
+
+.stats-panel {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid #374151;
+  font-size: 0.9rem;
+}
+
+.stats-panel h3 {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+}
+
+.stats-panel ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 4px 0 0 0;
+}
+
+.stats-panel li {
+  margin-bottom: 4px;
+}

@@ -61,6 +61,30 @@
         </p>
       </section>
 
+      <!-- Panel de estadísticas del servidor -->
+<div id="stats-panel" class="stats-panel">
+  <h3>Estadísticas del servidor</h3>
+  <p id="stats-loading" class="note">Cargando estadísticas...</p>
+  <p id="stats-error" class="note hidden">
+    No se pudieron cargar las estadísticas del servidor.
+  </p>
+  <ul id="stats-list" class="hidden">
+    <li>
+      Partidas jugadas:
+      <strong id="stat-total-games"></strong>
+    </li>
+    <li>
+      Mejor puntaje:
+      <strong id="stat-best-score"></strong>
+    </li>
+    <li>
+      Puntaje promedio:
+      <strong id="stat-avg-score"></strong>
+    </li>
+  </ul>
+</div>
+
+
       <!-- Estado de red -->
       <section id="status-section" class="status-bar">
         <span id="network-status" class="status status-ok">

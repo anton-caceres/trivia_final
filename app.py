@@ -313,6 +313,52 @@ def api_submit():
         }
     )
 
+@app.route("/api/stats")
+def api_stats():
+    """
+    Devuelve estadísticas básicas del servidor:
+    - total de partidas
+    - mejor puntaje
+    - promedio de puntaje
+    """
+    total_games = 0
+    best_score = 0
+    best_total = 0
+    sum_scores = 0
+    sum_totals = 0
+
+    if os.path.isfile(SCORES_FILE):
+        with open(SCORES_FILE, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                try:
+                    score = int(row["score"])
+                    total = int(row["total"])
+                except (KeyError, ValueError):
+                    continue
+
+                total_games += 1
+                sum_scores += score
+                sum_totals += total
+
+                if score > best_score or (score == best_score and total > best_total):
+                    best_score = score
+                    best_total = total
+
+    avg_score = 0.0
+    if total_games > 0:
+        avg_score = sum_scores / total_games
+
+    return jsonify(
+        {
+            "total_games": total_games,
+            "best_score": best_score,
+            "best_total": best_total,
+            "avg_score": avg_score,
+        }
+    )
+
+
 
 # -------------------------- RUTA: RESET DE DATOS --------------------------
 

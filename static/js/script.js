@@ -14,6 +14,14 @@ let timerId = null;
 // ---------------------------
 // Referencias al DOM
 // ---------------------------
+// Elementos de estadísticas
+const statsLoading = document.getElementById("stats-loading");
+const statsError = document.getElementById("stats-error");
+const statsList = document.getElementById("stats-list");
+const statTotalGames = document.getElementById("stat-total-games");
+const statBestScore = document.getElementById("stat-best-score");
+const statAvgScore = document.getElementById("stat-avg-score");
+
 const setupSection = document.getElementById("setup-section");
 const gameSection = document.getElementById("game-section");
 const resultSection = document.getElementById("result-section");
@@ -63,10 +71,44 @@ function checkNetworkStatus() {
     });
 }
 
+// ---------------------------
+// Cargar estadísticas del servidor
+// ---------------------------
+function loadStats() {
+  if (!statsLoading || !statTotalGames) return;
+
+  fetch("/api/stats")
+    .then((r) => r.json())
+    .then((data) => {
+      statsLoading.classList.add("hidden");
+      statsError.classList.add("hidden");
+      statsList.classList.remove("hidden");
+
+      const totalGames = data.total_games ?? 0;
+      const bestScore = data.best_score ?? 0;
+      const bestTotal = data.best_total ?? 0;
+      const avgScore = data.avg_score ?? 0;
+
+      statTotalGames.textContent = totalGames;
+      statBestScore.textContent =
+        totalGames > 0 ? `${bestScore} / ${bestTotal}` : "Sin partidas aún";
+      statAvgScore.textContent =
+        totalGames > 0 ? avgScore.toFixed(2) : "N/A";
+    })
+    .catch((err) => {
+      console.error("Error al cargar estadísticas:", err);
+      statsLoading.classList.add("hidden");
+      statsError.classList.remove("hidden");
+      statsList.classList.add("hidden");
+    });
+}
+
+
 // Primera verificación al cargar
 window.onload = () => {
   checkNetworkStatus();
   setInterval(checkNetworkStatus, 5000);
+  loadStats();
 };
 
 // ---------------------------
