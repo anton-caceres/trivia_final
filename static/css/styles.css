@@ -245,3 +245,33 @@ button:disabled {
 .stats-panel li {
   margin-bottom: 4px;
 }
+
+.answers-detail {
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+.answers-detail table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.answers-detail th,
+.answers-detail td {
+  border-bottom: 1px solid #374151;
+  padding: 4px 6px;
+  text-align: left;
+}
+
+.answers-detail th {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.answers-detail .answer-correct {
+  color: #bbf7d0;
+}
+
+.answers-detail .answer-incorrect {
+  color: #fecaca;
+}

@@ -282,12 +282,29 @@ def api_submit():
     # Mapeo rápido de id -> pregunta original
     question_map = {q["id"]: q for q in TRIVIA_QUESTIONS}
 
+    # Detalle por pregunta para devolver al cliente
+    details = []
+
     for ans in answers:
         qid = ans.get("questionId")
         selected = ans.get("selectedIndex")
         q = question_map.get(qid)
-        if q and selected == q["answer_index"]:
+        if not q:
+            continue
+
+        is_correct = selected == q["answer_index"]
+        if is_correct:
             correct += 1
+
+        details.append(
+            {
+                "question": q["question"],
+                "options": q["options"],
+                "correctIndex": q["answer_index"],
+                "selectedIndex": selected,
+                "isCorrect": is_correct,
+            }
+        )
 
     client_ip = request.remote_addr
     user_agent = request.headers.get("User-Agent", "Unknown")
@@ -310,8 +327,10 @@ def api_submit():
             "total": total,
             "clientIp": client_ip,
             "userAgent": user_agent,
+            "details": details,
         }
     )
+
 
 @app.route("/api/stats")
 def api_stats():
