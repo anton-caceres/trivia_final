@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Debug – Trivia en Red</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Debug – Estado del servidor de Trivia</h1>
+      <p class="subtitle">
+        Vista pensada para la defensa: muestra datos internos del backend.
+      </p>
+      <p>
+        <a href="{{ url_for('index') }}" style="color:#a5b4fc;">
+          ⬅ Volver al juego
+        </a>
+      </p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Información del backend</h2>
+        <ul>
+          <li>Total de preguntas configuradas: {{ info.total_preguntas_configuradas }}</li>
+          <li>Archivo de scores: {{ info.archivo_scores }}</li>
+          <li>Archivo de eventos: {{ info.archivo_eventos }}</li>
+          <li>Total de partidas registradas: {{ info.total_partidas_registradas }}</li>
+        </ul>
+
+        <p class="note">
+          Estos datos muestran que el servidor mantiene estado y registra la actividad
+          de los clientes (partidas y eventos), tal como lo haría un servidor real
+          en producción.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Proyecto de Redes – Servidor de juego de trivia tipo cliente–servidor.</p>
+    </footer>
+  </body>
+</html>

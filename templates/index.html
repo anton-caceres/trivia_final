@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trivia en Red</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Trivia en Red</h1>
+      <p class="subtitle">
+        Juego de preguntas con servidor Flask y registro de IP/cliente.
+      </p>
+      <p>
+        <a
+          href="{{ url_for('scoreboard') }}"
+          style="color:#a5b4fc; margin-right:12px;"
+        >
+          🏆 Ver scoreboard
+        </a>
+        <a
+          href="{{ url_for('debug_view') }}"
+          style="color:#a5b4fc; margin-right:12px;"
+        >
+          🛠 Ver debug del servidor
+        </a>
+
+        <!-- Botón admin BIEN VISIBLE -->
+        <button id="reset-data-btn" class="admin-btn-inline">
+          🔄 Resetear datos (admin)
+        </button>
+      </p>
+    </header>
+
+    <main class="container">
+      <!-- Configuración inicial -->
+      <section id="setup-section" class="card">
+        <h2>Configuración de partida</h2>
+        <label for="player-name">Tu nombre / alias</label>
+        <input
+          type="text"
+          id="player-name"
+          placeholder="Ej: Anto, Team Red, etc."
+        />
+
+        <label for="question-count">Cantidad de preguntas</label>
+        <select id="question-count">
+          <option value="3">3</option>
+          <option value="5" selected>5</option>
+          <option value="8">8</option>
+        </select>
+
+        <button id="start-btn">Comenzar partida</button>
+        <p class="note">
+          El servidor corre en una máquina de la red y esta página se comunica
+          con él mediante HTTP (API REST).
+        </p>
+      </section>
+
+      <!-- Estado de red -->
+      <section id="status-section" class="status-bar">
+        <span id="network-status" class="status status-ok">
+          🟢 Conectado al servidor
+        </span>
+      </section>
+
+      <!-- Juego -->
+      <section id="game-section" class="card hidden">
+        <div class="game-header">
+          <div>
+            <span id="label-player"></span>
+          </div>
+          <div>
+            Pregunta <span id="current-question-index">1</span> de
+            <span id="total-questions">5</span>
+          </div>
+          <div id="timer-wrapper">
+            ⏱ Tiempo: <span id="timer">20</span>s
+          </div>
+        </div>
+
+        <div id="question-meta" class="question-meta">
+          <span id="question-category"></span>
+          <span id="question-difficulty"></span>
+        </div>
+
+        <h3 id="question-text"></h3>
+
+        <div id="options-container" class="options"></div>
+
+        <!-- Mensaje de tiempo agotado / info del timer -->
+        <p id="time-message" class="note"></p>
+
+        <div class="game-footer">
+          <button id="next-btn" class="hidden">Siguiente</button>
+        </div>
+      </section>
+
+      <!-- Resultado -->
+      <section id="result-section" class="card hidden">
+        <h2>Resultado de la partida</h2>
+        <p>
+          Jugador/a:
+          <strong id="result-player-name"></strong>
+        </p>
+        <p>
+          Puntaje:
+          <strong id="result-score"></strong>
+        </p>
+        <p id="result-extra"></p>
+
+        <button id="play-again-btn">Jugar otra vez</button>
+
+        <h3>Detalle de red</h3>
+        <p class="note" id="network-detail"></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Proyecto de redes – Servidor de juegos tipo trivia accesible por red
+        local e IP pública.
+      </p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

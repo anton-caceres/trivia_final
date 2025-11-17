@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scoreboard – Trivia en Red</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Scoreboard – Trivia en Red</h1>
+      <p class="subtitle">
+        Historial de partidas registradas en el servidor (con datos de red).
+      </p>
+      <p>
+        <a href="{{ url_for('index') }}" style="color:#a5b4fc;">
+          ⬅ Volver al juego
+        </a>
+      </p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        {% if rows %}
+        <table
+          style="
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+          "
+        >
+          <thead>
+            <tr>
+              <th style="border-bottom:1px solid #4b5563; text-align:left; padding:6px;">Fecha</th>
+              <th style="border-bottom:1px solid #4b5563; text-align:left; padding:6px;">Jugador</th>
+              <th style="border-bottom:1px solid #4b5563; text-align:center; padding:6px;">Score</th>
+              <th style="border-bottom:1px solid #4b5563; text-align:center; padding:6px;">Total</th>
+              <th style="border-bottom:1px solid #4b5563; text-align:left; padding:6px;">IP</th>
+              <th style="border-bottom:1px solid #4b5563; text-align:left; padding:6px;">User-Agent</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows %}
+            <tr>
+              <td style="padding:6px;">{{ row.timestamp }}</td>
+              <td style="padding:6px;">{{ row.player_name }}</td>
+              <td style="padding:6px; text-align:center;">{{ row.score }}</td>
+              <td style="padding:6px; text-align:center;">{{ row.total }}</td>
+              <td style="padding:6px;">{{ row.client_ip }}</td>
+              <td style="padding:6px;">{{ row.user_agent }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <p class="note">
+          Todavía no hay partidas registradas. Jugá una vez para ver el
+          historial.
+        </p>
+        {% endif %}
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Proyecto de Redes – Auditoría de partidas y clientes por IP.</p>
+    </footer>
+  </body>
+</html>
